@@ -8,6 +8,7 @@ class GraduationProjectRecipe(ConanFile):
 
     def requirements(self):
         self.requires("spdlog/1.15.1")
+        self.requires("boost/1.87.0")
 
     def layout(self):
         cmake_layout(self)
