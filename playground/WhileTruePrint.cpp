@@ -6,22 +6,22 @@ using namespace std;
 
 int main(int argc, char *argv[])
 {
-    if (argc > 2)
+    if (argc < 1)
     {
         cout << R"(Usage: WhileTruePrint [time]
 
 一个重复打印数字的测试程序。默认五分钟后结束。
 
-[time] 重复的时间，-1 代表不结束。
+[time] 执行时间，单位为秒。-1 代表永久执行。
 )";
     }
 
     int counter = 0;
-    const int TIME_TO_END = (1 == argc ? 500 : atoi(argv[1]));
+    const int TIME_TO_END = (1 == argc ? 5 * 60 : atoi(argv[1]));
 
     while (true)
     {
-        if (TIME_TO_END > 0 && TIME_TO_END == counter)
+        if (TIME_TO_END == counter)
             return 0;
 
         cout << "Counter is " << ++counter << endl;
