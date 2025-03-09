@@ -1,5 +1,7 @@
 # Build
+**/bin/
 build/
+lib/
 
 # Conan
 CMakeUserPresets.json
