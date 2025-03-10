@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     }
 
     int counter = 0;
-    const int TIME_TO_END = (1 == argc ? 5 * 60 : atoi(argv[1]));
+    const int TIME_TO_END = (1 == argc ? 5 * 60 : stoi(argv[1]));
 
     while (true)
     {

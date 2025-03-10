@@ -28,7 +28,7 @@ ps -ef | grep -E "Scheduler|[exec]"
     }
 
     // 检测输入
-    int time = std::atoi(argv[1]);
+    int time = std::stoi(argv[1]);
     if (time <= 0)
         return std::cerr << "输入的时间格式不对，请输入大于零的秒数。" << std::endl, -1;
 

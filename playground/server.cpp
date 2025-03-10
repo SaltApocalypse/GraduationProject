@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
     {
         boost::asio::io_context io_context;
 
-        tcp::acceptor acceptor(io_context, tcp::endpoint(boost::asio::ip::make_address(argv[1]), std::atoi(argv[2])));
+        tcp::acceptor acceptor(io_context, tcp::endpoint(boost::asio::ip::make_address(argv[1]), std::stoi(argv[2])));
 
         std::atomic<int> client_count(0);
 
