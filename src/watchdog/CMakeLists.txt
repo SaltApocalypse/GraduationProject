@@ -16,4 +16,4 @@ find_package(Boost REQUIRED)
 # ========== 编译各个子模块 ==========
 # 调度模块
 add_executable(Scheduler "src/Scheduler.cpp")
-target_link_libraries(Scheduler boost::boost ${LIB_PATH}/lib/libSignal.a)
+target_link_libraries(Scheduler boost::boost)

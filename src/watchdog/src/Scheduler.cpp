@@ -4,9 +4,25 @@
 #include <wait.h>
 #include <iostream>
 #include <string>
-// #include "utils/Signal.hpp"
 
-void closeSignal();
+/**
+ * @brief 关闭所有信号
+ */
+void closeSignal()
+{
+    // 关闭信号
+    for (int i = 0; i < 64; i++)
+    {
+        signal(i, SIG_IGN);
+        close(i);
+    }
+
+    // 生成子进程交由系统托管，不再受 shell 控制
+    if (fork() != 0)
+        exit(0);
+
+    signal(SIGCHLD, SIG_DFL);
+}
 
 int main(int argc, char *argv[])
 {
@@ -32,8 +48,6 @@ ps -ef | grep -E "Scheduler|[exec]"
     if (time <= 0)
         return std::cerr << "输入的时间格式不对，请输入大于零的秒数。" << std::endl, -1;
 
-    // TODO:
-    //  Signal::closeSignal();
     closeSignal();
 
     char *argvs[argc];
@@ -58,20 +72,4 @@ ps -ef | grep -E "Scheduler|[exec]"
     }
 
     return 0;
-}
-
-void closeSignal()
-{
-    // 关闭信号
-    for (int i = 0; i < 64; i++)
-    {
-        signal(i, SIG_IGN);
-        close(i);
-    }
-
-    // 生成子进程交由系统托管，不再受 shell 控制
-    if (fork() != 0)
-        exit(0);
-
-    signal(SIGCHLD, SIG_DFL);
 }
