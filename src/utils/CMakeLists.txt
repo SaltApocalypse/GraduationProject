@@ -21,11 +21,11 @@ find_package(Boost REQUIRED)
 include_directories(${SOURCE_DIR}/include)
 
 # ========== 编译库 ==========
-# LOG
-add_library(Log STATIC ${PROJECT_SOURCE_DIR}/Log.cpp)
-target_link_libraries(Log spdlog::spdlog)
+# LOGGER
+add_library(Logger STATIC ${PROJECT_SOURCE_DIR}/Logger.cpp)
+target_link_libraries(Logger PRIVATE spdlog::spdlog)
 
-# SCHEDULE
-add_library(Schedule STATIC ${PROJECT_SOURCE_DIR}/Schedule.cpp)
-target_link_libraries(Schedule Boost::boost)
+# SCHEDULER
+add_library(Scheduler STATIC ${PROJECT_SOURCE_DIR}/Scheduler.cpp)
+target_link_libraries(Scheduler Boost::boost)
 

@@ -1,8 +1,10 @@
-#include "Schedule.hpp"
+#include "Scheduler.hpp"
 
-Schedule::Heartbeat *Schedule::Heartbeat::m_instance = nullptr;
+using namespace Scheduler;
 
-Schedule::Heartbeat::Heartbeat(const std::string &name, int timeout)
+Heartbeat *Heartbeat::m_instance = nullptr;
+
+Heartbeat::Heartbeat(const std::string &name, int timeout)
     : m_name(name), m_timeout(timeout), m_pid(getpid()), m_running(false), m_shm(nullptr), m_processInfo(nullptr)
 {
     // 注册实例
@@ -15,7 +17,7 @@ Schedule::Heartbeat::Heartbeat(const std::string &name, int timeout)
     initSharedMemory();
 }
 
-void Schedule::Heartbeat::initSharedMemory()
+void Heartbeat::initSharedMemory()
 {
     // 初始化共享内存
     m_shm = new boost::interprocess::managed_shared_memory(boost::interprocess::open_or_create, SHARED_MEMORY_NAME.c_str(), SHARED_MEMORY_SIZE, nullptr, boost::interprocess::permissions(0666));
@@ -23,7 +25,7 @@ void Schedule::Heartbeat::initSharedMemory()
     m_processInfo = m_shm->construct<ProcessInfo>(m_name.c_str())(m_pid, m_name.c_str(), m_timeout, std::time(nullptr));
 }
 
-void Schedule::Heartbeat::start()
+void Heartbeat::start()
 {
     m_running = true;
     while (m_running)
@@ -38,13 +40,13 @@ void Schedule::Heartbeat::start()
     }
 }
 
-void Schedule::Heartbeat::stop()
+void Heartbeat::stop()
 {
     m_running = false;
     cleanup();
 }
 
-void Schedule::Heartbeat::cleanup()
+void Heartbeat::cleanup()
 {
     if (m_shm && m_processInfo)
     {
@@ -57,13 +59,13 @@ void Schedule::Heartbeat::cleanup()
     }
 }
 
-Schedule::Heartbeat::~Heartbeat()
+Heartbeat::~Heartbeat()
 {
     stop();
     m_instance = nullptr;
 }
 
-void Schedule::Heartbeat::handle_exit(int signal)
+void Heartbeat::handle_exit(int signal)
 {
     if (m_instance)
         m_instance->stop();

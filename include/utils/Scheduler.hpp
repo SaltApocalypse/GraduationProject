@@ -10,7 +10,7 @@
 #include <boost/interprocess/sync/interprocess_mutex.hpp>
 #include <boost/interprocess/sync/scoped_lock.hpp>
 
-namespace Schedule
+namespace Scheduler
 {
     // 常量信息
     const std::string SHARED_MEMORY_NAME = "Process"; // 共享内存名称
@@ -80,13 +80,19 @@ namespace Schedule
 
         static Heartbeat *m_instance; // 实例
 
-        // 初始化共享内存和构造进程信息对象
+        /**
+         * @brief 初始化共享内存和构造进程信息对象
+         */
         void initSharedMemory();
 
-        // 清理共享内存资源
+        /**
+         * @brief 清理共享内存资源
+         */
         void cleanup();
 
-        // 静态信号处理函数，调用当前实例的stop进行清理
+        /**
+         * @brief 静态信号处理函数，调用当前实例的 stop 进行清理
+         */
         static void handle_exit(int signal);
     };
-}; // namespace Schedule
+}; // namespace Scheduler

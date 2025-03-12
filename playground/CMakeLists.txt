@@ -15,7 +15,7 @@ find_package(spdlog REQUIRED)
 find_package(Boost REQUIRED)
 
 # ========== 设置链接库 ==========
-set(EXTRA_LIBS boost::boost Schedule)
+set(EXTRA_LIBS boost::boost Scheduler Logger)
 
 # ========== 遍历每个文件并编译 ==========
 file(GLOB CPP_FILES "*.cpp")
